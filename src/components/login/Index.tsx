@@ -1,11 +1,14 @@
 import FormField from "./FormField";
+import loginFormImage from "../../assets/images/login-form-image.webp";
 
 const LogIn = () => {
     return (
         <div className="w-fit lg:w-[950px] h-[600px] flex items-center justify-center flex-col lg:flex-row rounded-lg shadow-2xl">
             {/* Imagen del lado izquierdo */}
             <div className="hidden lg:block w-1/3 h-full rounded-l-lg">
-
+                <img src={loginFormImage}
+                    className="w-full h-full rounded-l-lg object-cover"
+                    alt="Library" />
             </div>
 
             {/* Formulario del lado derecho */}
