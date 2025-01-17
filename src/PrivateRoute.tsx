@@ -12,8 +12,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/auth/user", { withCredentials: true });
-                console.log(response.status)
+                await axios.get("http://127.0.0.1:8000/auth/user", { withCredentials: true });
                 setIsAuthenticated(true);
             } catch (err) {
                 setIsAuthenticated(false);
