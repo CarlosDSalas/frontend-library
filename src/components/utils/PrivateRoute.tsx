@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import axiosInstance from "./api/axiosInstance";
+import axiosInstance from "../../api/axiosInstance";
 
 interface PrivateRouteProps {
     children: ReactNode;

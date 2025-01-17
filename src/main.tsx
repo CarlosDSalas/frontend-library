@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import './index.css'
 import App from './App.tsx'
 import Dashboard from "./components/dashboard/Index.tsx";
-import PrivateRoute from "./PrivateRoute.tsx";
+import PrivateRoute from "./components/utils/PrivateRoute.tsx";
 import DashboardUsers from "./components/dashboard/users/Index.tsx";
 import DashboardBooks from "./components/dashboard/books/Index.tsx";
 
