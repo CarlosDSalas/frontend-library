@@ -1,7 +1,17 @@
 #root {
   width: 100%;
   max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
   height: 100svh;
   padding: 2rem;
   text-align: center;
+}
+
+main {
+  position: relative;
+  max-width: 1920px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }

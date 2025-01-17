@@ -1,41 +1,57 @@
-import React, { useState } from "react";
-import axios, { isAxiosError } from "axios";
 import FormField from "../../login/FormField";
+import { useEffect, useState } from "react";
+import { User } from "./Index";
+import axiosInstance from "../../../api/axiosInstance";
+import { isAxiosError } from "axios";
+import Toaster, { useToaster } from "../../utils/Toaster";
 
 interface RegisterModalProps {
     isOpen: boolean;
     onClose: () => void;
+    editingUser?: User | null;
 }
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+const RegisterUser: React.FC<RegisterModalProps> = ({ isOpen, onClose, editingUser }) => {
+    const [name, setName] = useState(editingUser?.name || "");
+    const [email, setEmail] = useState(editingUser?.email || "");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
+    /* Usa el hook useToaster */
+    const { isToasterOpen, isSuccess, messageToaster, showToaster } = useToaster();
+
+    /* Restaura los valores cuando se esté editando o registrando un usuario */
+    useEffect(() => {
+        if (editingUser) {
+            setName(editingUser.name);
+            setEmail(editingUser.email);
+            setPassword("");
+        } else {
+            setName("");
+            setEmail("");
+            setPassword("");
+        }
+    }, [editingUser]);
+
+    /* Envía la solicitud para editar o registrar un usuario */
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError("");
 
         try {
-            const response = await axios.post(
-                "http://127.0.0.1:8000/auth/register",
-                { name, email, password },
-                { withCredentials: true }
-            );
-
-            if (response.status === 200) {
-                setName("");
-                setEmail("");
-                setPassword("");
-                onClose();
+            if (editingUser) { /* Edita un usuario */
+                await axiosInstance.patch(`/users/${editingUser.id}`, { name, email });
+            } else { /* Crea un usuario */
+                await axiosInstance.post("/auth/register", { name, email, password });
             }
+
+            onClose();
         } catch (err: any) {
-            if (isAxiosError(err) && err.response) {
-                setError(err.response.data.message)
-                console.log(err)
+            if (isAxiosError(err) && err.response && err.status == 401) {
+                showToaster(false, err.response.data.message);
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1000)
             } else {
-                setError("Error inesperado")
+                showToaster(false, "Error inesperado");
             }
         }
     };
@@ -48,49 +64,49 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
                 <button
                     className="absolute top-4 right-4 text-black"
                     onClick={onClose}
-                >
-                    &times;
-                </button>
+                >x</button>
 
-                <h2 className="text-black text-2xl font-bold text-center">Registrar Cliente</h2>
-
-                {error && <p className="text-red-500">{error}</p>}
+                <h2 className="text-black text-2xl font-bold text-center">
+                    {editingUser ? "Editar Usuario" : "Registrar Usuario"}
+                </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Nombre */}
                     <FormField
-                        type={"text"}
-                        label={"Nombre"}
-                        placeholder={"Nombre"}
+                        type="text"
+                        label="Nombre"
+                        placeholder="Nombre"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
 
-                    {/* Correo */}
                     <FormField
-                        type={"email"}
-                        label={"Correo electrónico"}
-                        placeholder={"Correo electrónico"}
+                        type="email"
+                        label="Correo electrónico"
+                        placeholder="Correo electrónico"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
-                    {/* Contraseña */}
-                    <FormField
-                        type={"password"}
-                        label={"Contraseña"}
-                        placeholder={"Contraseña"}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    {!editingUser && (
+                        <FormField
+                            type="password"
+                            label="Contraseña"
+                            placeholder="Contraseña"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    )}
 
                     <button type="submit">
-                        Registrar
+                        {editingUser ? "Guardar cambios" : "Registrar"}
                     </button>
                 </form>
             </div>
+
+            {/* Mensaje flotante */}
+            <Toaster isOpen={isToasterOpen} isSuccess={isSuccess} statusMessage={messageToaster} />
         </div>
     );
 };
 
-export default RegisterModal;
+export default RegisterUser;

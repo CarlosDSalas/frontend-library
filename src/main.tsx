@@ -5,6 +5,7 @@ import App from './App.tsx'
 import Dashboard from "./components/dashboard/Index.tsx";
 import PrivateRoute from "./PrivateRoute.tsx";
 import DashboardUsers from "./components/dashboard/users/Index.tsx";
+import DashboardBooks from "./components/dashboard/books/Index.tsx";
 
 const root = document.getElementById("root");
 
@@ -14,10 +15,11 @@ ReactDOM.createRoot(root!).render(
       {/* Ruta del Login */}
       <Route path="/" element={<App />} />
 
-      {/* Rutas del Dashboard */}
+      {/* Rutas protegidas del Dashboard */}
       <Route path="dashboard" element={<PrivateRoute><Outlet /></PrivateRoute>}>
         <Route index element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="users" element={<PrivateRoute><DashboardUsers /></PrivateRoute>} />
+        <Route path="books" element={<PrivateRoute><DashboardBooks /></PrivateRoute>} />
       </Route>
     </Routes>
   </BrowserRouter>

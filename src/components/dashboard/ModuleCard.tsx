@@ -5,6 +5,7 @@ interface ModuleCardProps {
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({ name, img, url }) => {
+    /* Redirige hacia el módulo indicado */
     const redirect = () => {
         window.location.href = url;
     };

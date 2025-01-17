@@ -1,32 +1,32 @@
 import { useState } from "react";
 import FormField from "./FormField";
 import loginFormImage from "../../assets/images/login-form-image.webp";
-import axios, { isAxiosError } from "axios";
+import { isAxiosError } from "axios";
+import axiosInstance from "../../api/axiosInstance";
 
 const LogIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    /* Envía la solicitud de inicio de sesión */
+    const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
         setError("");
 
         try {
-            const response = await axios.post(
-                "http://127.0.0.1:8000/auth/login",
-                { email, password },
-                { withCredentials: true }
-            );
+            const response = await axiosInstance.post("/auth/login", { email, password });
 
-            if (response.status == 200) {
+            // Si la solicitud fue exitosa, redirige al dashboard
+            if (response.status === 200) {
                 window.location.href = "/dashboard";
             }
         } catch (err) {
+            // Si hubo un problema, lo muestra
             if (isAxiosError(err) && err.response) {
-                setError(err.response.data.message)
+                setError(err.response.data.message);
             } else {
-                setError("Error inesperado")
+                setError("Error inesperado");
             }
         }
     };
