@@ -30,7 +30,7 @@ const Toaster: React.FC<ToasterProps> = ({ isOpen, isSuccess, statusMessage }) =
 
     return (
         <div className={`w-fit max-w-full fixed bottom-0 right-0 p-4 m-4 rounded-lg border
-            ${isSuccess ? 'bg-green-300 border-green-600' : 'bg-red-300 border-red-600'}`}>
+            ${isSuccess ? 'bg-green-400 border-green-600' : 'bg-red-300 border-red-600'}`}>
             {statusMessage}
         </div>
     )

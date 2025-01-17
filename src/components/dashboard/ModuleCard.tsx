@@ -13,7 +13,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ name, img, url }) => {
     return (
         <div
             onClick={redirect}
-            className="w-[400px] h-[300px] rounded-lg shadow-lg cursor-pointer relative group overflow-hidden"
+            className="w-[300px] md:w-[400px] h-[250px] md:h-[300px] rounded-lg shadow-lg cursor-pointer relative group overflow-hidden"
         >
             {/* Imagen de la tarjeta */}
             <img
@@ -26,7 +26,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ name, img, url }) => {
             <div className="absolute inset-0 bg-black bg-opacity-30 transition-all duration-500 group-hover:bg-opacity-50"></div>
 
             {/* Nombre del módulo */}
-            <p className="absolute inset-0 flex items-center justify-center text-4xl text-white font-black">
+            <p className="absolute inset-0 flex items-center justify-center text-3xl md:text-4xl text-white font-black">
                 {name}
             </p>
         </div>

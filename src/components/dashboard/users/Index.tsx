@@ -52,11 +52,6 @@ const DashboardUsers = () => {
     /* Cierra el modal y obtiene los usuarios */
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        if (!editingUser) {
-            showToaster(true, "Usuario creado correctamente");
-        } else {
-            showToaster(true, "Usuario editado correctamente");
-        }
         setEditingUser(null); // Reinicia usuario en edición
         fetchUsers();
     };
@@ -74,55 +69,58 @@ const DashboardUsers = () => {
     return (
         <section className="w-full flex flex-col gap-8">
             {/* Encabezado principal; Título y Botón para agregar nuevo usuario */}
-            <div className="w-full flex justify-between">
+            <div className="flex justify-between">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black">Usuarios</h1>
                 <button onClick={() => setIsModalOpen(true)}>Nuevo usuario</button>
             </div>
 
             {/* Tabla de usuarios */}
-            <table className="w-full">
-                {/* Encabezado */}
-                <thead className="bg-gray-300 text-black">
-                    <tr>
-                        <th className="px-4 py-2 text-center rounded-tl-lg">ID</th>
-                        <th className="px-4 py-2 text-center">Nombre</th>
-                        <th className="px-4 py-2 text-center">Correo</th>
-                        <th className="px-4 py-2 text-center rounded-tr-lg">Acciones</th>
-                    </tr>
-                </thead>
-                {/* Contenido */}
-                <tbody>
-                    {/* Si hay usuarios por mostrar */}
-                    {users && users.length > 0 ? (
-                        users.map((user, index) => (
-                            <tr
-                                key={user.id}
-                                className={`text-black text-center border-b ${index % 2 == 0 ? 'bg-white' : 'bg-gray-200'}`}
-                            >
-                                <td className="px-4 py-2">{user.id}</td>
-                                <td className="px-4 py-2">{user.name}</td>
-                                <td className="px-4 py-2">{user.email}</td>
-                                <td className="px-4 py-2 flex flex-col md:flex-row gap-2 justify-center">
-                                    <button onClick={() => {
-                                        setEditingUser(user);
-                                        setIsModalOpen(true);
-                                    }}>
-                                        Editar
-                                    </button>
-                                    <button onClick={() => handleDelete(user.id)}>Eliminar</button>
+            <div className="overflow-x-auto w-full">
+                {/* Tabla de libros */}
+                <table className="min-w-full table-auto">
+                    {/* Encabezado */}
+                    <thead className="bg-gray-300 text-black">
+                        <tr>
+                            <th className="px-4 py-2 text-center rounded-tl-lg">ID</th>
+                            <th className="px-4 py-2 text-center">Nombre</th>
+                            <th className="px-4 py-2 text-center">Correo</th>
+                            <th className="px-4 py-2 text-center rounded-tr-lg">Acciones</th>
+                        </tr>
+                    </thead>
+                    {/* Contenido */}
+                    <tbody>
+                        {/* Si hay usuarios por mostrar */}
+                        {users && users.length > 0 ? (
+                            users.map((user, index) => (
+                                <tr
+                                    key={user.id}
+                                    className={`text-black text-center border-b ${index % 2 == 0 ? 'bg-white' : 'bg-gray-200'}`}
+                                >
+                                    <td className="px-4 py-2">{user.id}</td>
+                                    <td className="px-4 py-2">{user.name}</td>
+                                    <td className="px-4 py-2">{user.email}</td>
+                                    <td className="px-4 py-2 flex flex-col md:flex-row gap-2 justify-center">
+                                        <button onClick={() => {
+                                            setEditingUser(user);
+                                            setIsModalOpen(true);
+                                        }}>
+                                            Editar
+                                        </button>
+                                        <button onClick={() => handleDelete(user.id)}>Eliminar</button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            // Si no hay usuarios por mostrar, lo indica
+                            <tr>
+                                <td colSpan={4} className="bg-white border px-4 py-2 text-black text-center">
+                                    No hay usuarios por mostrar
                                 </td>
                             </tr>
-                        ))
-                    ) : (
-                        // Si no hay usuarios por mostrar, lo indica
-                        <tr>
-                            <td colSpan={4} className="border px-4 py-2 text-center">
-                                No hay usuarios por mostrar
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                        )}
+                    </tbody>
+                </table>
+            </div>
 
             {/* Modal de Registro y Edición de usuarios */}
             <RegisterUser

@@ -10,8 +10,5 @@
 
 main {
   position: relative;
-  max-width: 1920px;
   height: 100%;
-  margin-left: auto;
-  margin-right: auto;
 }
