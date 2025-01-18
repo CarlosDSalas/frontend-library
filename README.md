@@ -1,50 +1,29 @@
-# React + TypeScript + Vite
+# Librería - Frontend (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es el proyecto frontend de la aplicación, desarrollado con React. \
+[Visita el proyecto backend](https://github.com/CarlosDSalas/backend-library)
 
-Currently, two official plugins are available:
+## Instalación
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clona el repositorio y, luego, instala las dependencias con el siguiente comando:
 
-## Expanding the ESLint configuration
+    npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Ejecución
 
-- Configure the top-level `parserOptions` property like this:
+Para correr el proyecto en modo de desarrollo, usa el siguiente comando:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+    npm run dev
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Estructura de Carpetas
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- `src/`: Aquí se encuentran todos los archivos del código fuente.
+  - `components/`: Componentes reutilizables organizados por módulo.
+  - `assets/`: Imágenes y otros archivos estáticos.
+  - `api/`: Configuración para llamadas a la API del backend.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Dependencias
+
+- **React Router**: Se encarga de gestionar la navegación entre las diferentes vistas.
+- **Axios**: Cliente HTTP para hacer solicitudes a la API backend.
+- **Tailwind CSS**: Framework CSS que permite un diseño rápido y fácil de personalizar.
